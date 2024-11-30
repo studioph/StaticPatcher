@@ -38,7 +38,7 @@ public class DisableHavokPatcher(
     }
 
     public bool Filter(IPlacedObjectGetter record) =>
-        _categories.Contains(_classifier.ClassifyItem(record))
+        _categories.Contains(_classifier.Classify(record))
         && (
             record.VirtualMachineAdapter is null
             || !record.VirtualMachineAdapter.Scripts.Any(script => script.Name == _scriptName)
