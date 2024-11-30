@@ -1,0 +1,12 @@
+{
+  "Nickname": "Static Patcher",
+  "Visibility": "Exclude",
+  "OneLineDescription": "Makes items static",
+  "LongDescription": "Configurable patcher to make select categories or items, or items in specific locations, static so they no longer go flying around.",
+  "PreferredAutoVersioning": "LatestTag",
+  "RequiredMods": [],
+  "TargetedReleases": [
+    "SkyrimSE",
+    "SkyrimSEGog"
+  ]
+}
