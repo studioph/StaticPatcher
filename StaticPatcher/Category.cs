@@ -522,7 +522,7 @@ public sealed class LocationType : CategoryBase<ILocationGetter>
             {
                 Skyrim.Keyword.LocTypeAnimalDen,
                 Skyrim.Keyword.LocSetCave,
-                Skyrim.Keyword.LocSetCaveIce
+                Skyrim.Keyword.LocSetCaveIce,
             }
         );
 
@@ -535,7 +535,8 @@ public sealed class LocationType : CategoryBase<ILocationGetter>
     public static readonly LocationType DwemerRuin =
         new(
             nameof(DwemerRuin),
-            new[] { Skyrim.Keyword.LocTypeDwarvenAutomatons, Skyrim.Keyword.LocSetDwarvenRuin }
+            new[] { Skyrim.Keyword.LocTypeDwarvenAutomatons, Skyrim.Keyword.LocSetDwarvenRuin },
+            locations: new[] { Skyrim.Location.ReachwindEyrieLocation }
         );
 
     public static readonly LocationType Farm =
@@ -548,7 +549,11 @@ public sealed class LocationType : CategoryBase<ILocationGetter>
         );
 
     public static readonly LocationType Fort =
-        new(nameof(Fort), new[] { Skyrim.Keyword.LocSetMilitaryFort });
+        new(
+            nameof(Fort),
+            new[] { Skyrim.Keyword.LocSetMilitaryFort, Skyrim.Keyword.LocTypeMilitaryFort },
+            cells: new[] { Skyrim.Cell.HelgenKeep01 }
+        );
 
     public static readonly LocationType GiantCamp =
         new(nameof(GiantCamp), new[] { Skyrim.Keyword.LocTypeGiantCamp });
@@ -560,7 +565,11 @@ public sealed class LocationType : CategoryBase<ILocationGetter>
             [
                 Dawnguard.Location.DLC1HunterHQLocationInterior,
                 Dawnguard.Location.DLC1VampireCastleGuildhallLocation,
-                Skyrim.Location.SolitudeCastleDourLocation
+                Skyrim.Location.SolitudeCastleDourLocation,
+                Skyrim.Location.DawnstarSanctuaryLocation,
+                Dawnguard.Location.DLC1VampireCastleDungeonLocation,
+                Dawnguard.Location.DLC1VampireCastleLocation,
+                Dawnguard.Location.DLC1HunterHQLocation
             ]
         );
 
@@ -590,7 +599,12 @@ public sealed class LocationType : CategoryBase<ILocationGetter>
         new(nameof(Mill), new[] { Skyrim.Keyword.LocTypeLumberMill });
 
     public static readonly LocationType Mine =
-        new(nameof(Mine), new[] { Skyrim.Keyword.LocTypeMine });
+        new(
+            nameof(Mine),
+            new[] { Skyrim.Keyword.LocTypeMine },
+            locations: new[] { Skyrim.Location.EmbershardLocation },
+            nameHints: new[] { "mine" }
+        );
 
     public static readonly LocationType PlayerHome =
         new(nameof(PlayerHome), new[] { Skyrim.Keyword.LocTypePlayerHouse });
@@ -659,13 +673,13 @@ public sealed class LocationType : CategoryBase<ILocationGetter>
         Settlement,
         Stronghold,
         Ship,
-        Cave,
         Fort,
         DwemerRuin,
         NordicRuin,
         Forsorwn,
-        BanditCamp,
         GiantCamp,
+        BanditCamp,
+        Cave,
         Dungeon, // Dungeon is last since it encompasses other more specific location types
         // COMPOSITE LOCATION TYPES
         Camp,
