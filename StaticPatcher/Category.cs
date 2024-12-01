@@ -5,6 +5,7 @@ using Ardalis.SmartEnum;
 using Mutagen.Bethesda.FormKeys.SkyrimSE;
 using Mutagen.Bethesda.Plugins;
 using Mutagen.Bethesda.Skyrim;
+using Noggog;
 
 namespace StaticPatcher;
 
@@ -41,12 +42,13 @@ public abstract class CategoryBase<TMajorGetter>(
     /// <summary>
     /// If all else fails, look for specific substrings in a record's name (does it have the word "cup" in the name, etc)
     /// </summary>
-    public readonly Regex? NamePattern = nameHints is not null
-        ? new(
-            $@"\b({string.Join('|', nameHints)})\b",
-            RegexOptions.IgnoreCase | RegexOptions.Compiled
-        )
-        : null;
+    public readonly Regex? NamePattern =
+        (nameHints is not null && nameHints.Any())
+            ? new(
+                $@"\b({string.Join('|', nameHints)})\b",
+                RegexOptions.IgnoreCase | RegexOptions.Compiled
+            )
+            : null;
 
     // Stores the original name list to facilitate composite categories
     private readonly ImmutableArray<string> _nameHints = nameHints?.ToImmutableArray() ?? [];
