@@ -67,6 +67,14 @@ namespace StaticPatcher
                     var result = classifier.Classify(baseObj);
                 }
             }
+
+            _logger.Information("Classifying locations");
+            LocationClassifier locClass = new(state.LinkCache);
+            var cells = state.LoadOrder.PriorityOrder.Cell().WinningOverrides();
+            foreach (var cell in cells)
+            {
+                var result = locClass.Classify(cell);
+            }
         }
     }
 }
