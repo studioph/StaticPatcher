@@ -3,6 +3,7 @@ using Mutagen.Bethesda.Plugins.Cache;
 using Mutagen.Bethesda.Plugins.Records;
 using Mutagen.Bethesda.Skyrim;
 using Noggog;
+using Serilog;
 
 namespace Synthesis.Util
 {
@@ -18,6 +19,14 @@ namespace Synthesis.Util
         where TMod : IMod, TModGetter
         where TModGetter : IModGetter
     {
+        private static readonly ILogger _logger;
+
+        static PipelineBase()
+        {
+            // Hardcoding since the generics make the signature hard to read
+            _logger = Log.ForContext("SourceContext", "Synthesis.Util.PipelineBase");
+        }
+
         protected readonly TMod _patchMod = patchMod;
         public uint PatchedCount { get; protected set; } = 0;
 
@@ -45,7 +54,7 @@ namespace Synthesis.Util
                 {
                     builder.Append($":({major.EditorID})");
                 }
-                Console.WriteLine(builder.ToString());
+                _logger.Information(builder.ToString());
             }
         }
 

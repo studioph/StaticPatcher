@@ -50,8 +50,15 @@ namespace Synthesis.Util
     /// <param name="FormKey">The record FormKey</param>
     /// <param name="EditorID">The record's editor ID, if present</param>
     /// <param name="Name">The record's name, if present</param>
-    public readonly record struct RecordInfo(FormKey FormKey, string? EditorID, string? Name);
+    public readonly record struct RecordInfo(FormKey FormKey, string? EditorID, string? Name)
+    {
+        public override string ToString() =>
+            $$"""{ FormKey = {{FormKey}}, EditorID = {{EditorID}}, Name = "{{Name}}" }""";
+    }
 
+    /// <summary>
+    /// Convenience class providing extension method constructors for the above types since who wants to type out all those generics???
+    /// </summary>
     public static class ConstructorExtensions
     {
         public static ForwardRecordContext<TMod, TModGetter, TMajor, TMajorGetter> WithContext<
