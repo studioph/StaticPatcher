@@ -112,9 +112,10 @@ public class ItemClassifier(ILinkCache<ISkyrimMod, ISkyrimModGetter> linkCache)
                 if (predicate(obj, category))
                 {
                     _logger.Debug(
-                        "Classified item {info} into category {category}",
+                        "Classified item {info} into category {category} based on {criteria}",
                         obj.GetInfo(),
-                        category
+                        category,
+                        predicate.Method.Name
                     );
                     return category;
                 }
@@ -150,9 +151,10 @@ public class LocationClassifier(ILinkCache<ISkyrimMod, ISkyrimModGetter> linkCac
                 if (predicate(location, locationType))
                 {
                     _logger.Debug(
-                        "Classified location {info} into type {location}",
+                        "Classified location {info} into type {location} based on {criteria}",
                         location.GetInfo(),
-                        locationType
+                        locationType,
+                        predicate.Method.Name
                     );
                     return locationType;
                 }
@@ -179,7 +181,7 @@ public class LocationClassifier(ILinkCache<ISkyrimMod, ISkyrimModGetter> linkCac
             if (IsMemberOf(cell, locationType))
             {
                 _logger.Debug(
-                    "Classified cell {info} into location type {location}",
+                    "Directly classified cell {info} into location type {location}",
                     cellInfo,
                     locationType
                 );
