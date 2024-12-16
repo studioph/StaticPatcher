@@ -1,4 +1,5 @@
-using System.Collections.Immutable;
+using System.Collections.Frozen;
+using Mutagen.Bethesda.Plugins.Cache;
 using Mutagen.Bethesda.Skyrim;
 using Noggog;
 using Synthesis.Util;
@@ -8,14 +9,16 @@ namespace StaticPatcher;
 public sealed record StaticifyData(PlacedObject.DefaultMajorFlag Flags, ScriptEntry Script);
 
 public class DisableHavokPatcher(
-    IList<ItemCategory> categories,
-    IList<string> locations,
-    ItemClassifier classifier
+    IEnumerable<ItemCategory> categories,
+    ItemClassifier classifier,
+    ILinkCache<ISkyrimMod, ISkyrimModGetter> linkCache
 ) : ITransformPatcher<IPlacedObject, IPlacedObjectGetter, StaticifyData>
 {
-    private readonly ImmutableArray<ItemCategory> _categories = [.. categories];
-    private readonly ImmutableArray<string> _locations = [.. locations];
+    private readonly FrozenSet<ItemCategory> _categories = [.. categories];
+
     private readonly ItemClassifier _classifier = classifier;
+
+    private readonly ILinkCache<ISkyrimMod, ISkyrimModGetter> _linkCache = linkCache;
 
     private static readonly string _scriptName = "defaultDisableHavokOnLoad";
 
@@ -29,19 +32,20 @@ public class DisableHavokPatcher(
         return script;
     }
 
-    public StaticifyData Apply(IPlacedObjectGetter record)
+    public StaticifyData Apply(IPlacedObjectGetter refr)
     {
-        var newFlags =
-            (PlacedObject.DefaultMajorFlag)record.SkyrimMajorRecordFlags
-            & ~PlacedObject.DefaultMajorFlag.DontHavokSettle;
+        PlacedObject.DefaultMajorFlag flags = (PlacedObject.DefaultMajorFlag)
+            refr.SkyrimMajorRecordFlags;
+        var newFlags = flags | PlacedObject.DefaultMajorFlag.DontHavokSettle;
         return new(newFlags, _disableHavokScript);
     }
 
-    public bool Filter(IPlacedObjectGetter record) =>
-        _categories.Contains(_classifier.Classify(record))
+    public bool Filter(IPlacedObjectGetter refr) =>
+        refr.IsMoveable(_linkCache)
+        && _categories.Contains(_classifier.Classify(refr))
         && (
-            record.VirtualMachineAdapter is null
-            || !record.VirtualMachineAdapter.Scripts.Any(script => script.Name == _scriptName)
+            refr.VirtualMachineAdapter is null
+            || !refr.VirtualMachineAdapter.Scripts.Any(script => script.Name == _scriptName)
         );
 
     public void Patch(IPlacedObject target, StaticifyData data)
