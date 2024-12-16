@@ -100,8 +100,18 @@ public class ItemClassifier(ILinkCache<ISkyrimMod, ISkyrimModGetter> linkCache)
         _logger = Log.ForContext<ItemClassifier>();
     }
 
-    public ItemCategory Classify(IPlacedObjectGetter refr) =>
-        Classify(refr.Base.Resolve(_linkCache));
+    public ItemCategory Classify(IPlacedObjectGetter refr)
+    {
+        if (refr.Base.TryResolve(_linkCache, out var baseObj))
+        {
+            return Classify(baseObj);
+        }
+        else
+        {
+            _logger.Debug("Unable to resolve base object for reference {info}", refr.GetInfo());
+            return ItemCategory.Unknown;
+        }
+    }
 
     protected override ItemCategory ClassifyInternal(IPlaceableObjectGetter obj)
     {
