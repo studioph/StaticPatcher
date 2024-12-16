@@ -1,9 +1,11 @@
+using System.Collections.Frozen;
 using Mutagen.Bethesda;
 using Mutagen.Bethesda.Skyrim;
 using Mutagen.Bethesda.Synthesis;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
+using Synthesis.Util;
 
 namespace StaticPatcher
 {
@@ -51,30 +53,44 @@ namespace StaticPatcher
 
         public static void RunPatch(IPatcherState<ISkyrimMod, ISkyrimModGetter> state)
         {
-            ConfigureLogging();
-            _logger.Information("Classifying placeable objects");
-            ItemClassifier classifier = new(state.LinkCache);
-            var placeable =
-                state.LoadOrder.PriorityOrder.WinningOverrides<IPlaceableObjectGetter>();
-
-            foreach (var baseObj in placeable)
+            FrozenSet<ItemCategory> categories = new ItemCategory[]
             {
-                if (
-                    (baseObj is IItemGetter && baseObj is not ILightGetter)
-                    || baseObj is IMoveableStaticGetter
-                )
-                {
-                    var result = classifier.Classify(baseObj);
-                }
-            }
+                ItemCategory.Silverware,
+                ItemCategory.Food
+            }.ToFrozenSet();
+            FrozenSet<LocationType> locations = new LocationType[]
+            {
+                LocationType.PlayerHome,
+                LocationType.Store
+            }.ToFrozenSet();
+
+            ConfigureLogging();
+
+            ItemClassifier itemClassifier = new(state.LinkCache);
+            LocationClassifier locationClassifier = new(state.LinkCache);
+            DisableHavokPatcher patcher = new(categories, itemClassifier, state.LinkCache);
+            SkyrimTransformPipeline pipeline = new(state.PatchMod);
 
             _logger.Information("Classifying locations");
-            LocationClassifier locClass = new(state.LinkCache);
             var cells = state.LoadOrder.PriorityOrder.Cell().WinningOverrides();
             foreach (var cell in cells)
             {
-                var result = locClass.Classify(cell);
+                locationClassifier.Classify(cell);
             }
+
+            _logger.Information("Disabling physics on configured objects");
+            var refrs = state
+                .LoadOrder.PriorityOrder.PlacedObject()
+                .WinningContextOverrides(state.LinkCache);
+
+            var matchingLocationRefrs = refrs.Where(context =>
+                context.TryGetParent<ICellGetter>(out var cell)
+                && locations.Contains(locationClassifier.Classify(cell))
+            );
+
+            pipeline.Run(patcher, matchingLocationRefrs);
+
+            _logger.Information("Patched {count} total records", pipeline.PatchedCount);
         }
     }
 }
