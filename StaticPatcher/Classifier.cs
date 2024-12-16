@@ -222,3 +222,57 @@ public class LocationClassifier(ILinkCache<ISkyrimMod, ISkyrimModGetter> linkCac
     private static bool IsMemberOf(ICellGetter cell, LocationType locationType) =>
         locationType.Cells.Contains(cell);
 }
+
+public static class ClassifierExtensions
+{
+    private static readonly ILogger _logger;
+
+    static ClassifierExtensions()
+    {
+        _logger = Log.ForContext(typeof(ClassifierExtensions));
+    }
+
+    private static readonly Dictionary<FormKey, bool> _cache = [];
+
+    /// <summary>
+    /// Checks if a placeable object is moveable
+    /// </summary>
+    /// <param name="baseObj">The record to test</param>
+    /// <returns>True if the record is a moveable object</returns>
+    public static bool IsMoveable(this IPlaceableObjectGetter baseObj) =>
+        _cache.GetOrAdd(
+            baseObj.FormKey,
+            () =>
+            {
+                RecordInfo info = baseObj.GetInfo();
+                if (baseObj is IItemGetter)
+                {
+                    if (baseObj is not ILightGetter)
+                    {
+                        return true;
+                    }
+                    _logger.Debug("PlaceableItem {info} is a light source", info);
+                }
+                else if (baseObj is IMoveableStaticGetter)
+                {
+                    return true;
+                }
+                _logger.Debug("PlaceableObject {info} is not Item or MoveableStatic", info);
+                return false;
+            }
+        );
+
+    /// <summary>
+    /// Checks if a placed object is moveable
+    /// </summary>
+    /// <param name="placed">The record to test</param>
+    /// <returns>True if the record is a moveable object</returns>
+    public static bool IsMoveable(
+        this IPlacedObjectGetter refr,
+        ILinkCache<ISkyrimMod, ISkyrimModGetter> linkCache
+    ) =>
+        _cache.GetOrAdd(
+            refr.FormKey,
+            () => refr.Base.TryResolve(linkCache, out var baseObj) && baseObj.IsMoveable()
+        );
+}
