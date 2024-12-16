@@ -6,9 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Mutagen.Bethesda.Skyrim" Version="0.47.4" />
+    <PackageReference Include="Mutagen.Bethesda.Skyrim" Version="0.48.1" />
     <PackageReference Include="Mutagen.Bethesda.FormKeys.SkyrimSE" Version="3.4" />
-    <PackageReference Include="Mutagen.Bethesda.Synthesis" Version="0.30.7" />
+    <PackageReference Include="Mutagen.Bethesda.Synthesis" Version="0.32.1" />
     <PackageReference Include="Tomlyn" Version="0.17.0" />
     <PackageReference Include="Ardalis.SmartEnum" Version="8.1.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
