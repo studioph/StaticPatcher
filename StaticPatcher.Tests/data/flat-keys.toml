@@ -1,0 +1,2 @@
+location.playerhome = ["food", "silverware"]
+location.store = ["clutter", 'food', 'weapon', 'armor', 'clothing']

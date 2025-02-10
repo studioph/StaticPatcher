@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaticPatcher", "StaticPatcher\StaticPatcher.csproj", "{DACC6E1D-32EB-4C86-96DC-8AD892FEACB8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaticPatcher.Tests", "StaticPatcher.Tests\StaticPatcher.Tests.csproj", "{E0587CF2-7B7C-450D-9BA1-2F925A74C574}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{DACC6E1D-32EB-4C86-96DC-8AD892FEACB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DACC6E1D-32EB-4C86-96DC-8AD892FEACB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DACC6E1D-32EB-4C86-96DC-8AD892FEACB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0587CF2-7B7C-450D-9BA1-2F925A74C574}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0587CF2-7B7C-450D-9BA1-2F925A74C574}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0587CF2-7B7C-450D-9BA1-2F925A74C574}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0587CF2-7B7C-450D-9BA1-2F925A74C574}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
