@@ -1,7 +1,7 @@
-using System.Collections.Frozen;
 using Mutagen.Bethesda;
 using Mutagen.Bethesda.Skyrim;
 using Mutagen.Bethesda.Synthesis;
+using Noggog;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
@@ -53,22 +53,18 @@ namespace StaticPatcher
 
         public static void RunPatch(IPatcherState<ISkyrimMod, ISkyrimModGetter> state)
         {
-            FrozenSet<ItemCategory> categories = new ItemCategory[]
-            {
-                ItemCategory.Silverware,
-                ItemCategory.Food
-            }.ToFrozenSet();
-            FrozenSet<LocationType> locations = new LocationType[]
-            {
-                LocationType.PlayerHome,
-                LocationType.Store
-            }.ToFrozenSet();
-
             ConfigureLogging();
+            var settings = TomlSettings.Load(
+                state.ExtraSettingsDataPath,
+                _settings.Value.SettingsFileName
+            );
 
             ItemClassifier itemClassifier = new(state.LinkCache);
             LocationClassifier locationClassifier = new(state.LinkCache);
-            DisableHavokPatcher patcher = new(categories, itemClassifier, state.LinkCache);
+            var patchers = settings.ToDictionary(
+                pair => pair.Key,
+                pair => new DisableHavokPatcher(pair.Value, itemClassifier, state.LinkCache)
+            );
             SkyrimTransformPipeline pipeline = new(state.PatchMod);
 
             _logger.Information("Classifying locations");
@@ -85,10 +81,10 @@ namespace StaticPatcher
 
             var matchingLocationRefrs = refrs.Where(context =>
                 context.TryGetParent<ICellGetter>(out var cell)
-                && locations.Contains(locationClassifier.Classify(cell))
+                && settings.ContainsKey(locationClassifier.Classify(cell))
             );
 
-            pipeline.Run(patcher, matchingLocationRefrs);
+            pipeline.Run(patchers.First().Value, matchingLocationRefrs);
 
             _logger.Information("Patched {count} total records", pipeline.PatchedCount);
         }
