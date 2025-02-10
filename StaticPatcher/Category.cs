@@ -542,9 +542,9 @@ public sealed class LocationType : CategoryBase<ILocationGetter>
     public static readonly LocationType Farm =
         new(nameof(Farm), new[] { Skyrim.Keyword.LocTypeFarm });
 
-    public static readonly LocationType Forsorwn =
+    public static readonly LocationType Forsworn =
         new(
-            nameof(Forsorwn),
+            nameof(Forsworn),
             new[] { Skyrim.Keyword.LocTypeForswornCamp, Skyrim.Keyword.LocTypeHagravenNest }
         );
 
@@ -632,7 +632,7 @@ public sealed class LocationType : CategoryBase<ILocationGetter>
     #endregion
     #region Composite locations
 
-    public static readonly LocationType Camp = new(nameof(Camp), BanditCamp, Forsorwn, GiantCamp);
+    public static readonly LocationType Camp = new(nameof(Camp), BanditCamp, Forsworn, GiantCamp);
 
     public static readonly LocationType Government =
         new(nameof(Government), CastlePalace, Barracks, Jail);
@@ -676,7 +676,7 @@ public sealed class LocationType : CategoryBase<ILocationGetter>
         Fort,
         DwemerRuin,
         NordicRuin,
-        Forsorwn,
+        Forsworn,
         GiantCamp,
         BanditCamp,
         Cave,
