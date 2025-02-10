@@ -1,0 +1,50 @@
+{
+    "name": "mediatools",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "features": {
+        "ghcr.io/devcontainers/features/common-utils:2": {
+            "username": "devuser",
+            "userUid": "1000",
+            "userGid": "1000",
+            "upgradePackages": false,
+            "installOhMyZshConfig": false,
+            "installOhMyZsh": false,
+            "installZsh": false
+        }
+    },
+    "customizations": {
+        "vscodium": {
+            "extensions": [
+                "tamasfe.even-better-toml@0.19.1",
+                "antfu.icons-carbon",
+                "equinusocio.vsc-material-theme",
+                "eamodio.gitlens",
+                "ms-dotnettools.vscode-dotnet-runtime",
+                "muhammad-sammy.csharp",
+                "csharpier.csharpier-vscode",
+                "fernandoescolar.vscode-solution-explorer",
+                "redhat.vscode-xml"
+            ]
+        }
+    },
+    "mounts": [
+        {
+            "type": "bind",
+            "source": "${localEnv:HOME}/.nuget",
+            "target": "/home/devuser/.nuget"
+        },
+        {
+            "type": "bind",
+            "source": "${localEnv:HOME}/.config/VSCodium/User/settings.json",
+            "target": "/home/devuser/.config/VSCodium/User/settings.json"
+        },
+        {
+            "type": "bind",
+            "source": "${localEnv:HOME}/dev/skyrim",
+            "target": "/skyrim"
+        }
+    ],
+    "remoteUser": "devuser"
+}
