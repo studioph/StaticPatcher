@@ -1,6 +1,6 @@
 {
   "Nickname": "Static Patcher",
-  "Visibility": "Exclude",
+  "Visibility": "IncludeButHide",
   "OneLineDescription": "Makes items static",
   "LongDescription": "Configurable patcher to make specific categories of items in specific locations static so they no longer go flying around.",
   "PreferredAutoVersioning": "LatestTag",
