@@ -59,7 +59,11 @@ See the [TOML site](https://toml.io) for a full overview of the format.
 ## Available Categories
 Below are the current available pre-defined categories for locations and items:
 
+
 ### Location categories
+<details>
+<summary>Show</summary>
+
 - BanditCamp
 - Barracks
 - CastlePalace
@@ -86,8 +90,12 @@ Below are the current available pre-defined categories for locations and items:
 - Stronghold
 - Temple
 - Town
+</details>
 
 ### Item Categories
+<details>
+<summary>Show</summary>
+
 - Alchemy
 - Ammo
 - Armor
@@ -111,6 +119,7 @@ Below are the current available pre-defined categories for locations and items:
 - SoulGem
 - Tool
 - Weapon
+</details>
 
 ## Caveats
 
