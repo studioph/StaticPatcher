@@ -5,6 +5,8 @@ Configurable Synthesis patcher to allow making specific categories of items in s
 > **Early-Release Status**. This patcher is functional, but still being actively developed and subject to breaking changes.
 >
 > _I am actively seeking feedback from early users, particularly on the UX and flexibiliy of configuring the patcher_
+>
+> Please leave feedback [in this thread](https://github.com/studioph/StaticPatcher/issues/1)
 
 ## Usage
 Requires [Disable Havok Script Tweak Resource](https://www.nexusmods.com/skyrimspecialedition/mods/93426).
@@ -123,7 +125,9 @@ Below are the current available pre-defined categories for locations and items:
 
 ## Caveats
 
-The patcher relies heavily on keywords for classifying most records, especially for mod-added items which is the main value proposition of a dynamic patcher like this. Unfortunately, in my own testing the quality and accuracy of keywords in mods varies greatly, with even some well-known and popular mods adding incorrect keywords, or removing correct ones from records. Sadly there's not much I can do about that if a mod-added item or location uses incorrect keywords and gets mis-categorized.
+The patcher classifies items into the most specific category possible. For instance places and cups will be classified as `silverware`, even though they are also `clutter`. Currently this means that specifying `clutter` in the configuration will omit silverware and more specific sub-categories of clutter. The same holds true for locations, with `NordicRuin` working for places such as Bleak Falls Barrow, but not plain `dungeon`. I'm working on addressing this so that the "hierarchy" of categories can be followed. 
+
+The patcher relies heavily on keywords for classifying most records, especially for mod-added items which is the main value proposition of a dynamic patcher like this. Unfortunately, in my own testing the quality and accuracy of keywords in mods varies greatly, with even some well-known and popular mods adding incorrect keywords, or removing correct ones from records. Sadly there's not much I can do if a mod-added item or location uses incorrect keywords and gets mis-categorized.
 
 However, there are different approaches that can be used for classification that could mitigate some of these issues, and I am seeking feedback from early-adopters that will help shape future development.
 
@@ -133,14 +137,14 @@ However, there are different approaches that can be used for classification that
 - Different patching strategies - i.e. creating new `STAT` records using the same meshes as the existing movable objects so they are truly static. This would make the items not interactable, but some users may prefer this.
 
 ## Reporting Bugs/Issues
+> **NOTE**: I will not respond and close issues from users not using the fixed Havok scripts from Andrealphus. There are too many problems with the vanilla scripts that will cause things to not work properly and I don't have the bandwidth to deal with false bug-reports that are caused by the vanilla script bugs.
+
 Please include the following to help me help you:
 - Synthesis log file(s)
     - Please turn on verbose logging as this provides a lot more information for me
 - `Plugins.txt`
 - Specific record(s) that are problematic
   - Screenshots/videos not required, but appreciated
-
-**NOTE**: I will close issues from users not using the fixed Havok scripts from Andrealphus. There are too many issues with the vanilla scripts that will cause things to not work properly and I don't have the bandwidth to deal with false bug-reports that are a result of the vanilla script bugs.
 
 ## Credits
 **AndrealphusVIII** for his fixes to the disable Havok script which allow the changes made by the patcher to actually behave properly in-game.
