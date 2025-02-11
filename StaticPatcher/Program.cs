@@ -54,6 +54,11 @@ namespace StaticPatcher
         public static void RunPatch(IPatcherState<ISkyrimMod, ISkyrimModGetter> state)
         {
             ConfigureLogging();
+            _logger.Information(
+                "Loading settings from {dir}/{file}",
+                state.ExtraSettingsDataPath,
+                _settings.Value.SettingsFileName
+            );
             var settings = TomlSettings.Load(
                 state.ExtraSettingsDataPath,
                 _settings.Value.SettingsFileName
