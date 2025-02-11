@@ -49,7 +49,7 @@ store = ["food", "armor"]
 playerhome = ["food", "silverware", "soulgem"]
 ```
 
-The config file is case-insensitive.
+The category names in the config file are case-insensitive.
 
 The configuration file can be written with "dotted keys" syntax:
 ```toml
