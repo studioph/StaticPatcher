@@ -72,24 +72,19 @@ namespace StaticPatcher
             );
             SkyrimTransformPipeline pipeline = new(state.PatchMod);
 
-            _logger.Information("Classifying locations");
-            var cells = state.LoadOrder.PriorityOrder.Cell().WinningOverrides();
-            foreach (var cell in cells)
-            {
-                locationClassifier.Classify(cell);
-            }
-
             _logger.Information("Disabling physics on configured objects");
             var refrs = state
                 .LoadOrder.PriorityOrder.PlacedObject()
                 .WinningContextOverrides(state.LinkCache);
 
-            var matchingLocationRefrs = refrs.Where(context =>
-                context.TryGetParent<ICellGetter>(out var cell)
-                && settings.ContainsKey(locationClassifier.Classify(cell))
-            );
-
-            pipeline.Run(patchers.First().Value, matchingLocationRefrs);
+            foreach (var (location, patcher) in patchers)
+            {
+                var matchingLocationRefrs = refrs.Where(context =>
+                    context.TryGetParent<ICellGetter>(out var cell)
+                    && locationClassifier.Classify(cell).Equals(location)
+                );
+                pipeline.Run(patcher, matchingLocationRefrs);
+            }
 
             _logger.Information("Patched {count} total records", pipeline.PatchedCount);
         }
