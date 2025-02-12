@@ -153,7 +153,12 @@ public sealed class ItemCategory : CategoryBase<IPlaceableObjectGetter>
         new(
             nameof(BuildingMaterial),
             [HearthFires.Keyword.BYOHHouseCraftingCategorySmithing],
-            items: [HearthFires.MiscItem.BYOHMaterialClay, HearthFires.MiscItem.BYOHMaterialStraw]
+            items:
+            [
+                HearthFires.MiscItem.BYOHMaterialClay,
+                HearthFires.MiscItem.BYOHMaterialStraw,
+                HearthFires.MiscItem.BYOHMaterialGlass
+            ]
         );
 
     public static readonly ItemCategory Clothing =
