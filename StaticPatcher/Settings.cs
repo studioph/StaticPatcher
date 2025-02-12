@@ -1,6 +1,7 @@
 using System.Collections.Frozen;
 using Mutagen.Bethesda.WPF.Reflection.Attributes;
 using Noggog;
+using Serilog;
 using Tomlyn;
 
 namespace StaticPatcher;
@@ -13,24 +14,27 @@ public class StaticPatcherSettings
     public string SettingsFileName = "StaticPatcherSettings.toml";
 }
 
-public class TomlSettings
+public class Configuration
 {
     public Dictionary<LocationType, List<ItemCategory>> Location { get; } = [];
 
     public static FrozenDictionary<LocationType, FrozenSet<ItemCategory>> Load(
-        DirectoryPath? extraSettingsPath,
+        DirectoryPath? configDir,
         string fileName
     )
     {
-        if (extraSettingsPath is null)
+        Log.Logger.Information("Loading configuration from {dir}/{file}", configDir, fileName);
+        if (configDir is null)
         {
-            throw new DirectoryNotFoundException($"Missing ExtraSettingsDataPath argument");
+            throw new DirectoryNotFoundException(configDir);
         }
-        var settingsPath = Path.Combine(extraSettingsPath, fileName);
+        var settingsPath = Path.Combine(configDir, fileName);
 
         if (!File.Exists(settingsPath))
         {
-            throw new FileNotFoundException($"Could not find settings file: {settingsPath}");
+            throw new FileNotFoundException(
+                $"Could not find configuration file: {settingsPath}. A configuration file must be provided containg which locations and items to patch."
+            );
         }
         var options = new TomlModelOptions
         {
@@ -52,11 +56,17 @@ public class TomlSettings
             },
         };
 
-        var toml = Toml.ToModel<TomlSettings>(
+        var toml = Toml.ToModel<Configuration>(
             File.ReadAllText(settingsPath),
             settingsPath,
             options: options
         );
+        if (!toml.Location.Any())
+        {
+            Log.Logger.Warning(
+                "Configuration file contains no mappings, no records will be patched"
+            );
+        }
         return toml.Location.ToFrozenDictionary(pair => pair.Key, pair => pair.Value.ToFrozenSet());
     }
 }

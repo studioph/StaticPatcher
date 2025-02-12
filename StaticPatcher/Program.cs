@@ -1,7 +1,6 @@
 using Mutagen.Bethesda;
 using Mutagen.Bethesda.Skyrim;
 using Mutagen.Bethesda.Synthesis;
-using Noggog;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
@@ -54,12 +53,7 @@ namespace StaticPatcher
         public static void RunPatch(IPatcherState<ISkyrimMod, ISkyrimModGetter> state)
         {
             ConfigureLogging();
-            _logger.Information(
-                "Loading settings from {dir}/{file}",
-                state.ExtraSettingsDataPath,
-                _settings.Value.SettingsFileName
-            );
-            var settings = TomlSettings.Load(
+            var settings = Configuration.Load(
                 state.ExtraSettingsDataPath,
                 _settings.Value.SettingsFileName
             );
