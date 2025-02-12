@@ -2,9 +2,9 @@
 
 Configurable Synthesis patcher to allow making specific categories of items in specific locations static so that they no longer randomly go flying around for no reason.
 
-> **Early-Release Status**. This patcher is functional, but still being actively developed and subject to breaking changes.
+> **Pre-Release Status**. This patcher is functional, but still being actively developed and subject to breaking changes.
 >
-> _I am actively seeking feedback from early users, particularly on the UX and flexibiliy of configuring the patcher_
+> _I am actively seeking feedback from early adopters, particularly on the UX and flexibiliy of configuring the patcher_
 >
 > Please leave feedback [in this thread](https://github.com/studioph/StaticPatcher/issues/1)
 
@@ -34,7 +34,7 @@ The patcher adds the `NoHavokSettle` flag and the `defaultDisableHavokOnLoad` sc
 
 
 ## Config File
-The configuration of which locations and types of items you want to make static comes from a [TOML](https://toml.io) configuration file added to the Synthesis [user data folder](https://mutagen-modding.github.io/Synthesis/devs/User-Input/#user-data-folder). By default the file name is `StaticPatcherSettings.toml`, but this can be changed in the settings UI as mentioned above.
+This patcher is similar mods such as SPID that require you to tell it what you want it to patch. The configuration of which locations and types of items you want to make static comes from a [TOML](https://toml.io) configuration file that must be added to the Synthesis [user data folder](https://mutagen-modding.github.io/Synthesis/devs/User-Input/#user-data-folder). By default the file name is `StaticPatcherSettings.toml`, but this can be changed in the settings UI as mentioned above.
 
 The reason for a seprate config file is the Synthesis settings UI is not well suited to complex mappings and other composite objects that are needed to make the patcher flexible. TOML was chosen as it is similar to the INI format that many users are familiar with, while offering many improvements over traditional INI files.
 
@@ -123,7 +123,7 @@ Below are the current available pre-defined categories for locations and items:
 - Weapon
 </details>
 
-## Caveats
+## Caveats/Known Issues
 
 The patcher classifies items into the most specific category possible. For instance places and cups will be classified as `silverware`, even though they are also `clutter`. Currently this means that specifying `clutter` in the configuration will omit silverware and more specific sub-categories of clutter. The same holds true for locations, with `NordicRuin` working for places such as Bleak Falls Barrow, but not plain `dungeon`. I'm working on addressing this so that the "hierarchy" of categories can be followed. 
 
