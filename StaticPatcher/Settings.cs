@@ -23,7 +23,7 @@ public class Configuration
         string fileName
     )
     {
-        Log.Logger.Information("Loading configuration from {dir}/{file}", configDir, fileName);
+        Log.Logger.Information("Loading configuration from \"{dir}/{file}\"", configDir, fileName);
         if (configDir is null)
         {
             throw new DirectoryNotFoundException(configDir);
@@ -64,7 +64,7 @@ public class Configuration
         if (!toml.Location.Any())
         {
             Log.Logger.Warning(
-                "Configuration file contains no mappings, no records will be patched. Edit {path} to add entries for what to patch.",
+                "WARNING: Configuration file contains no mappings, no records will be patched. Edit \"{path}\" to add entries for what to patch.",
                 settingsPath
             );
         }
