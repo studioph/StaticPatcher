@@ -33,7 +33,7 @@ public class Configuration
         if (!File.Exists(settingsPath))
         {
             throw new FileNotFoundException(
-                $"Could not find configuration file: {settingsPath}. A configuration file must be provided containg which locations and items to patch."
+                $"Could not find configuration file: \"{settingsPath}\". A configuration file must be provided containing which locations and items to patch."
             );
         }
         var options = new TomlModelOptions
