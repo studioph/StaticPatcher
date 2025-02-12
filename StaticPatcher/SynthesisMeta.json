@@ -2,7 +2,7 @@
   "Nickname": "Static Patcher",
   "Visibility": "IncludeButHide",
   "OneLineDescription": "Makes items static",
-  "LongDescription": "Configurable patcher to make specific categories of items in specific locations static so they no longer go flying around. Requires Disable 'Havok Script Tweak Resource' by AndrealphusVIII.",
+  "LongDescription": "Configurable patcher to make specific categories of items in specific locations static so they no longer go flying around. Requires Disable 'Havok Script Tweak Resource' (replacer version) by AndrealphusVIII.",
   "PreferredAutoVersioning": "LatestTag",
   "RequiredMods": [],
   "TargetedReleases": [

@@ -9,7 +9,7 @@ Configurable Synthesis patcher to allow making specific categories of items in s
 > Please leave feedback [in this thread](https://github.com/studioph/StaticPatcher/issues/1)
 
 ## Usage
-Requires [Disable Havok Script Tweak Resource](https://www.nexusmods.com/skyrimspecialedition/mods/93426).
+Requires [Disable Havok Script Tweak Resource](https://www.nexusmods.com/skyrimspecialedition/mods/93426) (replacer version).
 
 - Add to your Synthesis pipeline using the patcher browser
 - If using multiple Synthesis groups, run this patcher in the same group as other patchers that modify placed objects to ensure changes are merged properly.
