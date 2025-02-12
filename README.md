@@ -66,27 +66,29 @@ Below are the current available pre-defined categories for locations and items:
 <details>
 <summary>Show</summary>
 
-- BanditCamp
+Sub-types are mostly accurate, with some locations not containing the parent keywords.
+
 - Barracks
 - CastlePalace
-- Cave
 - City
 - Dungeon
-- DwemerRuin
-- Farm
-- Forsworn
-- Fort
-- GiantCamp
+  - BanditCamp
+  - Cave
+  - DwemerRuin
+  - Forsworn
+  - Fort
+  - GiantCamp
+  - NordicRuin
 - Guild
 - HallOfTheDead
 - House
+  - PlayerHome
 - Inn
 - Jail
-- Mill
-- Mine
-- NordicRuin
-- PlayerHome
 - Settlement
+  - Farm
+  - Mill
+  - Mine
 - Ship
 - Store
 - Stronghold
@@ -101,11 +103,13 @@ Below are the current available pre-defined categories for locations and items:
 - Alchemy
 - Ammo
 - Armor
-- Bone
 - Book
-- BuildingMaterial
 - Clothing
 - Clutter
+  - Bone
+  - BuildingMaterial
+  - Scrap
+  - Silverware
 - Food
 - Gem
 - Gold
@@ -115,9 +119,7 @@ Below are the current available pre-defined categories for locations and items:
 - Ore
 - Pelt
 - Potion
-- Scrap
 - Scroll
-- Silverware
 - SoulGem
 - Tool
 - Weapon
