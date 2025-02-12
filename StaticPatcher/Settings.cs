@@ -61,7 +61,7 @@ public class Configuration
             settingsPath,
             options: options
         );
-        if (!toml.Location.Any())
+        if (toml.Location.Count == 0)
         {
             Log.Logger.Warning(
                 "WARNING: Configuration file contains no mappings, no records will be patched. Edit \"{path}\" to add entries for what to patch.",
