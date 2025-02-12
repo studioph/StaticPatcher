@@ -9,8 +9,9 @@ public class SettingsTests
     [Theory]
     [InlineData("lowercase.toml")]
     [InlineData("camelcase.toml")]
+    [InlineData("empty.toml")]
     public void TestTableFormat(string fileName)
     {
-        TomlSettings.Load(_dataFolder, fileName);
+        Configuration.Load(_dataFolder, fileName);
     }
 }
