@@ -64,7 +64,8 @@ public class Configuration
         if (!toml.Location.Any())
         {
             Log.Logger.Warning(
-                "Configuration file contains no mappings, no records will be patched"
+                "Configuration file contains no mappings, no records will be patched. Edit {path} to add entries for what to patch.",
+                settingsPath
             );
         }
         return toml.Location.ToFrozenDictionary(pair => pair.Key, pair => pair.Value.ToFrozenSet());

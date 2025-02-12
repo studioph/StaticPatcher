@@ -1,0 +1,15 @@
+[location]
+# This is the configuration file where you define which locations and types of items you want to be made static.
+# By default this config file will result in no record being patched - customize it how you see fit.
+# The configuration file is case-insensitive when it comes to the location and category names.
+
+# EXAMPLES
+
+# Make food and silverware in your homes static
+# playerhome = ["food", "silverware"]
+
+# Make armor, weapons, alchemy ingrediants, and soul gems in stores static
+# store = ["weapon", "armor", "alchemy", "soulgem"]
+
+# Make any kind of clutter in any kind of dungeon static
+# dungeon = ["clutter"]
