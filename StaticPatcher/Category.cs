@@ -21,10 +21,13 @@ public abstract class CategoryBase<TMajorGetter>(
     string name,
     IEnumerable<IFormLinkGetter<IKeywordGetter>>? keywords = null,
     IEnumerable<IFormLinkGetter<TMajorGetter>>? members = null,
-    IEnumerable<string>? nameHints = null
+    IEnumerable<string>? nameHints = null,
+    CategoryBase<TMajorGetter>? parent = null
 ) : SmartEnum<CategoryBase<TMajorGetter>, string>(name, name.ToLower())
     where TMajorGetter : class, ISkyrimMajorRecordGetter
 {
+    public readonly CategoryBase<TMajorGetter>? Parent = parent;
+
     /// <summary>
     /// Keywords are the most generic method of classifying a record.
     /// However, they are sometimes either incorrect or imprecise, necessitating more specific methods below.
@@ -65,6 +68,25 @@ public abstract class CategoryBase<TMajorGetter>(
             members: subCategories.SelectMany(sub => sub.Members),
             nameHints: subCategories.SelectMany(sub => sub._nameHints)
         ) { }
+
+    /// <summary>
+    /// Checks if the given category matches or is a sub-category of the current category
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public bool IsEqualOrChildOf(CategoryBase<TMajorGetter> other)
+    {
+        var cat = other;
+        while (cat is not null)
+        {
+            if (Equals(cat))
+            {
+                return true;
+            }
+            cat = cat.Parent;
+        }
+        return false;
+    }
 }
 
 /// <summary>
@@ -76,9 +98,10 @@ public sealed class ItemCategory : CategoryBase<IPlaceableObjectGetter>
         string name,
         IEnumerable<IFormLinkGetter<IKeywordGetter>>? keywords = null,
         IEnumerable<IFormLinkGetter<IPlaceableObjectGetter>>? items = null,
-        IEnumerable<string>? nameHints = null
+        IEnumerable<string>? nameHints = null,
+        ItemCategory? parent = null
     )
-        : base(name, keywords, items, nameHints) { }
+        : base(name, keywords, items, nameHints, parent) { }
 
     /// <inheritdoc>
     public ItemCategory(string name, params ItemCategory[] subCategories)
@@ -495,9 +518,10 @@ public sealed class LocationType : CategoryBase<ILocationGetter>
         IEnumerable<IFormLinkGetter<IKeywordGetter>>? keywords = null,
         IEnumerable<IFormLinkGetter<ILocationGetter>>? locations = null,
         IEnumerable<IFormLinkGetter<ICellGetter>>? cells = null,
-        IEnumerable<string>? nameHints = null
+        IEnumerable<string>? nameHints = null,
+        LocationType? parent = null
     )
-        : base(name, keywords, locations, nameHints) =>
+        : base(name, keywords, locations, nameHints, parent) =>
         Cells = cells?.ToFrozenSet() ?? FrozenSet<IFormLinkGetter<ICellGetter>>.Empty;
 
     public LocationType(string name, params LocationType[] subTypes)

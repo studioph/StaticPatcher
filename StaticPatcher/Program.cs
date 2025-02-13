@@ -75,7 +75,7 @@ namespace StaticPatcher
             {
                 var matchingLocationRefrs = refrs.Where(context =>
                     context.TryGetParent<ICellGetter>(out var cell)
-                    && locationClassifier.Classify(cell).Equals(location)
+                    && locationClassifier.Classify(cell).IsEqualOrChildOf(location)
                 );
                 pipeline.Run(patcher, matchingLocationRefrs);
             }
