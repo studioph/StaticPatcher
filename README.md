@@ -127,8 +127,6 @@ Sub-types are mostly accurate, with some locations not containing the parent key
 
 ## Caveats/Known Issues
 
-The patcher classifies items into the most specific category possible. For instance places and cups will be classified as `silverware`, even though they are also `clutter`. Currently this means that specifying `clutter` in the configuration will omit silverware and more specific sub-categories of clutter. The same holds true for locations, with `NordicRuin` working for places such as Bleak Falls Barrow, but not plain `dungeon`. I'm working on addressing this so that the "hierarchy" of categories can be followed. 
-
 The patcher relies heavily on keywords for classifying most records, especially for mod-added items which is the main value proposition of a dynamic patcher like this. Unfortunately, in my own testing the quality and accuracy of keywords in mods varies greatly, with even some well-known and popular mods adding incorrect keywords, or removing correct ones from records. Sadly there's not much I can do if a mod-added item or location uses incorrect keywords and gets mis-categorized.
 
 However, there are different approaches that can be used for classification that could mitigate some of these issues, and I am seeking feedback from early-adopters that will help shape future development.
