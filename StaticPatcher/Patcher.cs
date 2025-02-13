@@ -42,7 +42,7 @@ public class DisableHavokPatcher(
 
     public bool Filter(IPlacedObjectGetter refr) =>
         refr.IsMoveable(_linkCache)
-        && _categories.Any(cat => cat.IsEqualOrChildOf(_classifier.Classify(refr)))
+        && _categories.Any(cat => _classifier.Classify(refr).IsEqualOrChildOf(cat))
         && (
             refr.VirtualMachineAdapter is null
             || !refr.VirtualMachineAdapter.Scripts.Any(script => script.Name == _scriptName)

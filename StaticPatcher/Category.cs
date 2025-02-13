@@ -76,10 +76,10 @@ public abstract class CategoryBase<TMajorGetter>(
     /// <returns></returns>
     public bool IsEqualOrChildOf(CategoryBase<TMajorGetter> other)
     {
-        var cat = other;
+        var cat = this;
         while (cat is not null)
         {
-            if (Equals(cat))
+            if (other.Equals(cat))
             {
                 return true;
             }
@@ -122,6 +122,29 @@ public sealed class ItemCategory : CategoryBase<IPlaceableObjectGetter>
     public static readonly ItemCategory Armor =
         new(nameof(Armor), new[] { Skyrim.Keyword.VendorItemArmor });
 
+    public static readonly ItemCategory Book =
+        new(
+            nameof(Book),
+            [Skyrim.Keyword.VendorItemBook, Skyrim.Keyword.VendorItemRecipe],
+            items:
+            [
+                Skyrim.MiscItem.BurnedBook01,
+                Skyrim.MiscItem.RuinedBook,
+                Skyrim.MiscItem.RuinedBook02
+            ]
+        );
+
+    public static readonly ItemCategory Clothing =
+        new(
+            nameof(Clothing),
+            new[] { Skyrim.Keyword.VendorItemClothing, Skyrim.Keyword.ArmorClothing }
+        );
+
+    public static readonly ItemCategory Clutter =
+        new(nameof(Clutter), new[] { Skyrim.Keyword.VendorItemClutter });
+
+    #region Clutter Subtypes
+
     public static readonly ItemCategory Bone =
         new(
             nameof(Bone),
@@ -157,19 +180,8 @@ public sealed class ItemCategory : CategoryBase<IPlaceableObjectGetter>
                 Dragonborn.MiscItem.DLC2dunKarstaagSkullItemNoName,
                 Dragonborn.MiscItem.DLC2dunKolbjornSkull,
             ],
-            nameHints: ["bone", "skull"]
-        );
-
-    public static readonly ItemCategory Book =
-        new(
-            nameof(Book),
-            [Skyrim.Keyword.VendorItemBook, Skyrim.Keyword.VendorItemRecipe],
-            items:
-            [
-                Skyrim.MiscItem.BurnedBook01,
-                Skyrim.MiscItem.RuinedBook,
-                Skyrim.MiscItem.RuinedBook02
-            ]
+            nameHints: ["bone", "skull"],
+            parent: Clutter
         );
 
     public static readonly ItemCategory BuildingMaterial =
@@ -181,17 +193,132 @@ public sealed class ItemCategory : CategoryBase<IPlaceableObjectGetter>
                 HearthFires.MiscItem.BYOHMaterialClay,
                 HearthFires.MiscItem.BYOHMaterialStraw,
                 HearthFires.MiscItem.BYOHMaterialGlass
-            ]
+            ],
+            parent: Clutter
         );
 
-    public static readonly ItemCategory Clothing =
+    public static readonly ItemCategory Scrap =
         new(
-            nameof(Clothing),
-            new[] { Skyrim.Keyword.VendorItemClothing, Skyrim.Keyword.ArmorClothing }
+            nameof(Scrap),
+            items:
+            [
+                Skyrim.MiscItem.DwarvenCog,
+                Skyrim.MiscItem.DwarvenGear,
+                Skyrim.MiscItem.DwarvenCenturionDynamo,
+                Skyrim.MiscItem.DwarvenGyro,
+                Skyrim.MiscItem.DwarvenLargeScrap,
+                Skyrim.MiscItem.DwarvenLargeScrap2,
+                Skyrim.MiscItem.DwarvenLargeScrap3,
+                Skyrim.MiscItem.DwarvenScrapBent,
+                Skyrim.MiscItem.DwarvenScrapLever,
+                Skyrim.MiscItem.DwarvenScrapLever02,
+                Skyrim.MiscItem.DwarvenScrapMetal,
+                Skyrim.MiscItem.DwarvenPlateMetalLarge,
+                Skyrim.MiscItem.DwarvenPlateMetalSmall,
+            ],
+            parent: Clutter
         );
 
-    public static readonly ItemCategory Clutter =
-        new(nameof(Clutter), new[] { Skyrim.Keyword.VendorItemClutter });
+    public static readonly ItemCategory Silverware =
+        new(
+            nameof(Silverware),
+            items:
+            [
+                Dawnguard.MiscItem.DLC01TankardBloody01,
+                Dawnguard.MiscItem.DLC1SilverGobletBlood01,
+                Dawnguard.MiscItem.DLC1SilverGobletBlood02,
+                Dawnguard.MiscItem.DLC1SilverJugBlood01,
+                Dawnguard.MiscItem.DLC1VampireChalice,
+                Dawnguard.MiscItem.DLC1VampireChalicewithBlood,
+                Dawnguard.MiscItem.DLC1WineBottle03Empty,
+                Dawnguard.MiscItem.DLC1WineBottle04Empty,
+                Skyrim.MiscItem.BasicFork01,
+                Skyrim.MiscItem.BasicKnife01,
+                Skyrim.MiscItem.BasicPlate01,
+                Skyrim.MiscItem.BasicPlate02,
+                Skyrim.MiscItem.BasicTankard01,
+                Skyrim.MiscItem.BasicWoodenBowl01,
+                Skyrim.MiscItem.BasicWoodenPlate01,
+                Skyrim.MiscItem.CastIronPotMedium01,
+                Skyrim.MiscItem.CastIronPotSmall01,
+                Skyrim.MiscItem.DwarvenBowl01,
+                Skyrim.MiscItem.DwarvenBowl02,
+                Skyrim.MiscItem.DwarvenBowl03,
+                Skyrim.MiscItem.DwarvenFork,
+                Skyrim.MiscItem.DwarvenHighBowl01,
+                Skyrim.MiscItem.DwarvenHighBowl02,
+                Skyrim.MiscItem.DwarvenHighCup01,
+                Skyrim.MiscItem.DwarvenHighCup02,
+                Skyrim.MiscItem.DwarvenHighCup03,
+                Skyrim.MiscItem.DwarvenHighPlate01,
+                Skyrim.MiscItem.DwarvenHighPot01,
+                Skyrim.MiscItem.DwarvenKnife,
+                Skyrim.MiscItem.DwarvenSpoon,
+                Skyrim.MiscItem.Flagon,
+                Skyrim.MiscItem.Glazed02Jug01,
+                Skyrim.MiscItem.GlazedBowl01,
+                Skyrim.MiscItem.GlazedBowl01Nordic,
+                Skyrim.MiscItem.GlazedBowl01Nordic,
+                Skyrim.MiscItem.GlazedBowl02,
+                Skyrim.MiscItem.GlazedBowl02Nordic,
+                Skyrim.MiscItem.GlazedCup01,
+                Skyrim.MiscItem.GlazedCup01Nordic,
+                Skyrim.MiscItem.GlazedGoblet01,
+                Skyrim.MiscItem.GlazedGoblet01Nordic,
+                Skyrim.MiscItem.GlazedJugLarge01,
+                Skyrim.MiscItem.GlazedJugLarge01Nordic,
+                Skyrim.MiscItem.GlazedJugSmall01,
+                Skyrim.MiscItem.GlazedJugSmall01Nordic,
+                Skyrim.MiscItem.GlazedPlate01,
+                Skyrim.MiscItem.GlazedPlate01Nordic,
+                Skyrim.MiscItem.Kettle01,
+                Skyrim.MiscItem.MS11YsgramorsSoupSpoon,
+                Skyrim.MiscItem.SilverBowl01,
+                Skyrim.MiscItem.SilverBowl02,
+                Skyrim.MiscItem.SilverCandleStick01Off,
+                Skyrim.MiscItem.SilverCandleStick02Off,
+                Skyrim.MiscItem.SilverCandleStick03Off,
+                Skyrim.MiscItem.SilverGoblet01,
+                Skyrim.MiscItem.SilverGoblet02,
+                Skyrim.MiscItem.SilverJug01,
+                Skyrim.MiscItem.SilverPlate01,
+                Skyrim.MiscItem.SilverPlatter01,
+                Skyrim.MiscItem.SilverPlatter01IdleCups,
+                Skyrim.MiscItem.SilverPlatter01IdleFood,
+                Skyrim.MiscItem.WineBottle01AEmpty,
+                Skyrim.MiscItem.WineBottle01BEmpty,
+                Skyrim.MiscItem.WineBottle02AEmpty,
+                Skyrim.MiscItem.WineBottle02BEmpty,
+                Skyrim.MiscItem.WineSolitudeSpicedBottleEmpty,
+                Skyrim.MiscItem.WoodenLadle01,
+            ],
+            nameHints:
+            [
+                "pot",
+                "cup",
+                "plate",
+                "bowl",
+                "fork",
+                "knife",
+                "spoon",
+                "ladle",
+                "tankard",
+                "flagon",
+                "goblet",
+                "platter",
+                "kettle",
+                "jug",
+                "chalice",
+                "couldron",
+                "pan",
+                "pitcher",
+                "bottle",
+                "mug"
+            ],
+            parent: Clutter
+        );
+
+    #endregion
 
     public static readonly ItemCategory Food =
         new(
@@ -295,127 +422,8 @@ public sealed class ItemCategory : CategoryBase<IPlaceableObjectGetter>
             nameHints: ["potion", "poison"]
         );
 
-    public static readonly ItemCategory Scrap =
-        new(
-            nameof(Scrap),
-            items:
-            [
-                Skyrim.MiscItem.DwarvenCog,
-                Skyrim.MiscItem.DwarvenGear,
-                Skyrim.MiscItem.DwarvenCenturionDynamo,
-                Skyrim.MiscItem.DwarvenGyro,
-                Skyrim.MiscItem.DwarvenLargeScrap,
-                Skyrim.MiscItem.DwarvenLargeScrap2,
-                Skyrim.MiscItem.DwarvenLargeScrap3,
-                Skyrim.MiscItem.DwarvenScrapBent,
-                Skyrim.MiscItem.DwarvenScrapLever,
-                Skyrim.MiscItem.DwarvenScrapLever02,
-                Skyrim.MiscItem.DwarvenScrapMetal,
-                Skyrim.MiscItem.DwarvenPlateMetalLarge,
-                Skyrim.MiscItem.DwarvenPlateMetalSmall,
-            ]
-        );
-
     public static readonly ItemCategory Scroll =
         new(nameof(Scroll), new[] { Skyrim.Keyword.VendorItemScroll });
-
-    public static readonly ItemCategory Silverware =
-        new(
-            nameof(Silverware),
-            items:
-            [
-                Dawnguard.MiscItem.DLC01TankardBloody01,
-                Dawnguard.MiscItem.DLC1SilverGobletBlood01,
-                Dawnguard.MiscItem.DLC1SilverGobletBlood02,
-                Dawnguard.MiscItem.DLC1SilverJugBlood01,
-                Dawnguard.MiscItem.DLC1VampireChalice,
-                Dawnguard.MiscItem.DLC1VampireChalicewithBlood,
-                Dawnguard.MiscItem.DLC1WineBottle03Empty,
-                Dawnguard.MiscItem.DLC1WineBottle04Empty,
-                Skyrim.MiscItem.BasicFork01,
-                Skyrim.MiscItem.BasicKnife01,
-                Skyrim.MiscItem.BasicPlate01,
-                Skyrim.MiscItem.BasicPlate02,
-                Skyrim.MiscItem.BasicTankard01,
-                Skyrim.MiscItem.BasicWoodenBowl01,
-                Skyrim.MiscItem.BasicWoodenPlate01,
-                Skyrim.MiscItem.CastIronPotMedium01,
-                Skyrim.MiscItem.CastIronPotSmall01,
-                Skyrim.MiscItem.DwarvenBowl01,
-                Skyrim.MiscItem.DwarvenBowl02,
-                Skyrim.MiscItem.DwarvenBowl03,
-                Skyrim.MiscItem.DwarvenFork,
-                Skyrim.MiscItem.DwarvenHighBowl01,
-                Skyrim.MiscItem.DwarvenHighBowl02,
-                Skyrim.MiscItem.DwarvenHighCup01,
-                Skyrim.MiscItem.DwarvenHighCup02,
-                Skyrim.MiscItem.DwarvenHighCup03,
-                Skyrim.MiscItem.DwarvenHighPlate01,
-                Skyrim.MiscItem.DwarvenHighPot01,
-                Skyrim.MiscItem.DwarvenKnife,
-                Skyrim.MiscItem.DwarvenSpoon,
-                Skyrim.MiscItem.Flagon,
-                Skyrim.MiscItem.Glazed02Jug01,
-                Skyrim.MiscItem.GlazedBowl01,
-                Skyrim.MiscItem.GlazedBowl01Nordic,
-                Skyrim.MiscItem.GlazedBowl01Nordic,
-                Skyrim.MiscItem.GlazedBowl02,
-                Skyrim.MiscItem.GlazedBowl02Nordic,
-                Skyrim.MiscItem.GlazedCup01,
-                Skyrim.MiscItem.GlazedCup01Nordic,
-                Skyrim.MiscItem.GlazedGoblet01,
-                Skyrim.MiscItem.GlazedGoblet01Nordic,
-                Skyrim.MiscItem.GlazedJugLarge01,
-                Skyrim.MiscItem.GlazedJugLarge01Nordic,
-                Skyrim.MiscItem.GlazedJugSmall01,
-                Skyrim.MiscItem.GlazedJugSmall01Nordic,
-                Skyrim.MiscItem.GlazedPlate01,
-                Skyrim.MiscItem.GlazedPlate01Nordic,
-                Skyrim.MiscItem.Kettle01,
-                Skyrim.MiscItem.MS11YsgramorsSoupSpoon,
-                Skyrim.MiscItem.SilverBowl01,
-                Skyrim.MiscItem.SilverBowl02,
-                Skyrim.MiscItem.SilverCandleStick01Off,
-                Skyrim.MiscItem.SilverCandleStick02Off,
-                Skyrim.MiscItem.SilverCandleStick03Off,
-                Skyrim.MiscItem.SilverGoblet01,
-                Skyrim.MiscItem.SilverGoblet02,
-                Skyrim.MiscItem.SilverJug01,
-                Skyrim.MiscItem.SilverPlate01,
-                Skyrim.MiscItem.SilverPlatter01,
-                Skyrim.MiscItem.SilverPlatter01IdleCups,
-                Skyrim.MiscItem.SilverPlatter01IdleFood,
-                Skyrim.MiscItem.WineBottle01AEmpty,
-                Skyrim.MiscItem.WineBottle01BEmpty,
-                Skyrim.MiscItem.WineBottle02AEmpty,
-                Skyrim.MiscItem.WineBottle02BEmpty,
-                Skyrim.MiscItem.WineSolitudeSpicedBottleEmpty,
-                Skyrim.MiscItem.WoodenLadle01,
-            ],
-            nameHints:
-            [
-                "pot",
-                "cup",
-                "plate",
-                "bowl",
-                "fork",
-                "knife",
-                "spoon",
-                "ladle",
-                "tankard",
-                "flagon",
-                "goblet",
-                "platter",
-                "kettle",
-                "jug",
-                "chalice",
-                "couldron",
-                "pan",
-                "pitcher",
-                "bottle",
-                "mug"
-            ]
-        );
 
     public static readonly ItemCategory SoulGem =
         new(nameof(SoulGem), new[] { Skyrim.Keyword.VendorItemSoulGem });
@@ -538,11 +546,19 @@ public sealed class LocationType : CategoryBase<ILocationGetter>
     public static readonly LocationType Barracks =
         new(nameof(Barracks), new[] { Skyrim.Keyword.LocTypeBarracks });
 
-    public static readonly LocationType BanditCamp =
-        new(nameof(BanditCamp), new[] { Skyrim.Keyword.LocTypeBanditCamp });
-
     public static readonly LocationType CastlePalace =
         new(nameof(CastlePalace), new[] { Skyrim.Keyword.LocTypeCastle });
+
+    public static readonly LocationType City =
+        new(nameof(City), new[] { Skyrim.Keyword.LocTypeCity });
+
+    public static readonly LocationType Dungeon =
+        new(nameof(Dungeon), new[] { Skyrim.Keyword.LocTypeDungeon });
+
+    #region Dungeon Subtypes
+
+    public static readonly LocationType BanditCamp =
+        new(nameof(BanditCamp), new[] { Skyrim.Keyword.LocTypeBanditCamp }, parent: Dungeon);
 
     public static readonly LocationType Cave =
         new(
@@ -552,40 +568,48 @@ public sealed class LocationType : CategoryBase<ILocationGetter>
                 Skyrim.Keyword.LocTypeAnimalDen,
                 Skyrim.Keyword.LocSetCave,
                 Skyrim.Keyword.LocSetCaveIce,
-            }
+            },
+            parent: Dungeon
         );
-
-    public static readonly LocationType City =
-        new(nameof(City), new[] { Skyrim.Keyword.LocTypeCity });
-
-    public static readonly LocationType Dungeon =
-        new(nameof(Dungeon), new[] { Skyrim.Keyword.LocTypeDungeon });
-
     public static readonly LocationType DwemerRuin =
         new(
             nameof(DwemerRuin),
             new[] { Skyrim.Keyword.LocTypeDwarvenAutomatons, Skyrim.Keyword.LocSetDwarvenRuin },
-            locations: new[] { Skyrim.Location.ReachwindEyrieLocation }
+            locations: new[] { Skyrim.Location.ReachwindEyrieLocation },
+            parent: Dungeon
         );
-
-    public static readonly LocationType Farm =
-        new(nameof(Farm), new[] { Skyrim.Keyword.LocTypeFarm });
 
     public static readonly LocationType Forsworn =
         new(
             nameof(Forsworn),
-            new[] { Skyrim.Keyword.LocTypeForswornCamp, Skyrim.Keyword.LocTypeHagravenNest }
+            new[] { Skyrim.Keyword.LocTypeForswornCamp, Skyrim.Keyword.LocTypeHagravenNest },
+            parent: Dungeon
         );
 
     public static readonly LocationType Fort =
         new(
             nameof(Fort),
             new[] { Skyrim.Keyword.LocSetMilitaryFort, Skyrim.Keyword.LocTypeMilitaryFort },
-            cells: new[] { Skyrim.Cell.HelgenKeep01 }
+            cells: new[] { Skyrim.Cell.HelgenKeep01 },
+            parent: Dungeon
         );
 
     public static readonly LocationType GiantCamp =
-        new(nameof(GiantCamp), new[] { Skyrim.Keyword.LocTypeGiantCamp });
+        new(nameof(GiantCamp), new[] { Skyrim.Keyword.LocTypeGiantCamp }, parent: Dungeon);
+
+    public static readonly LocationType NordicRuin =
+        new(
+            nameof(NordicRuin),
+            new[]
+            {
+                Skyrim.Keyword.LocSetNordicRuin,
+                Skyrim.Keyword.LocTypeDraugrCrypt,
+                Skyrim.Keyword.LocTypeDragonPriestLair
+            },
+            parent: Dungeon
+        );
+
+    #endregion
 
     public static readonly LocationType Guild =
         new(
@@ -608,38 +632,39 @@ public sealed class LocationType : CategoryBase<ILocationGetter>
     public static readonly LocationType House =
         new(nameof(House), new[] { Skyrim.Keyword.LocTypeHouse });
 
+    #region House Subtypes
+
+    public static readonly LocationType PlayerHome =
+        new(nameof(PlayerHome), new[] { Skyrim.Keyword.LocTypePlayerHouse }, parent: House);
+
+    #endregion
+
     public static readonly LocationType Inn = new(nameof(Inn), new[] { Skyrim.Keyword.LocTypeInn });
 
     public static readonly LocationType Jail =
         new(nameof(Jail), new[] { Skyrim.Keyword.LocTypeJail });
 
-    public static readonly LocationType NordicRuin =
-        new(
-            nameof(NordicRuin),
-            new[]
-            {
-                Skyrim.Keyword.LocSetNordicRuin,
-                Skyrim.Keyword.LocTypeDraugrCrypt,
-                Skyrim.Keyword.LocTypeDragonPriestLair
-            }
-        );
+    public static readonly LocationType Settlement =
+        new(nameof(Settlement), new[] { Skyrim.Keyword.LocTypeSettlement });
+
+    #region Settlement Subtypes
+
+    public static readonly LocationType Farm =
+        new(nameof(Farm), new[] { Skyrim.Keyword.LocTypeFarm }, parent: Settlement);
 
     public static readonly LocationType Mill =
-        new(nameof(Mill), new[] { Skyrim.Keyword.LocTypeLumberMill });
+        new(nameof(Mill), new[] { Skyrim.Keyword.LocTypeLumberMill }, parent: Settlement);
 
     public static readonly LocationType Mine =
         new(
             nameof(Mine),
             new[] { Skyrim.Keyword.LocTypeMine },
             locations: new[] { Skyrim.Location.EmbershardLocation },
-            nameHints: new[] { "mine" }
+            nameHints: new[] { "mine" },
+            parent: Settlement
         );
 
-    public static readonly LocationType PlayerHome =
-        new(nameof(PlayerHome), new[] { Skyrim.Keyword.LocTypePlayerHouse });
-
-    public static readonly LocationType Settlement =
-        new(nameof(Settlement), new[] { Skyrim.Keyword.LocTypeSettlement });
+    #endregion
 
     public static readonly LocationType Ship =
         new(nameof(Ship), new[] { Skyrim.Keyword.LocTypeShip });
